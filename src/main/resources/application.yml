@@ -1,0 +1,18 @@
+# 应用名称
+# 应用服务 WEB 访问端口
+server:
+  port: 8080
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    username: root
+    url: jdbc:mysql://localhost:3306/kktakeout?serverTimezone=UTC
+    password: "Liwenlong.0328"
+mybatis-plus:
+  configuration:
+    #在映射实体类或者属性时 按照驼峰命名法进行映射
+    map-underscore-to-camel-case: true
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  global-config:
+    db-config:
+      id-type: assign_id
