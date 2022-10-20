@@ -8,6 +8,7 @@ class KktakeoutApplicationTests {
 
     @Test
     void contextLoads() {
+
     }
 
 }
