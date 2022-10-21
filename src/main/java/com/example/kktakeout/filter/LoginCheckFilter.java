@@ -3,6 +3,7 @@ package com.example.kktakeout.filter;
 
 import com.alibaba.fastjson.JSON;
 import com.example.kktakeout.common.R;
+import com.example.kktakeout.utils.BaseContext;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.util.AntPathMatcher;
 import javax.servlet.*;
@@ -40,12 +41,13 @@ public class LoginCheckFilter implements Filter {
             log.info("被拦截且被放行的请求: {}",request.getRequestURI());
             return;
         }
+
         if(request.getSession().getAttribute("employee")!=null){
+            BaseContext.setCurrentId((Long) request.getSession().getAttribute("employee"));
             filterChain.doFilter(request,response);
             log.info("被拦截且被放行的请求: {}",request.getRequestURI());
             return;
         }else {
-
             response.getWriter().write(com.alibaba.fastjson.JSON.toJSONString(R.error("NOTLOGIN")));
             return;
         }

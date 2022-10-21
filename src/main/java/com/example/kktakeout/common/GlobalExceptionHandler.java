@@ -29,5 +29,9 @@ public class GlobalExceptionHandler {
 
         else return R.error("啊,未知错误?");
     }
+    @ExceptionHandler(CustomException.class)
+    public R<String > customExcptionHandler(CustomException ce){
+        return R.error(ce.getMessage());
+    }
 
 }
