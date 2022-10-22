@@ -13,8 +13,6 @@ import com.example.kktakeout.service.SetmealService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import static sun.java2d.loops.SurfaceType.Custom;
-
 @Service
 public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category> implements CategoryService {
     @Autowired

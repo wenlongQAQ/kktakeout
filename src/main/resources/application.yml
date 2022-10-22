@@ -16,3 +16,6 @@ mybatis-plus:
   global-config:
     db-config:
       id-type: assign_id
+# 图片存储位置
+kk:
+  path: D:\\kkTakeoutImg\\

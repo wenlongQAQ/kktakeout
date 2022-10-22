@@ -4,23 +4,22 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.kktakeout.common.R;
 import com.example.kktakeout.entity.Category;
-import com.example.kktakeout.entity.Employee;
 import com.example.kktakeout.service.CategoryService;
-import com.example.kktakeout.service.impl.CategoryServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @Slf4j
 @RequestMapping("/category")
 public class CategoryController {
     @Autowired
-    private CategoryService service;
+    private CategoryService categoryService;
     @PostMapping
     public R<String> save(@RequestBody Category category){
-        service.save(category);
+        categoryService.save(category);
         return R.success("新增成功");
     }
 
@@ -38,7 +37,7 @@ public class CategoryController {
         //添加排序条件
         queryWrapper.orderByDesc(Category::getSort);
         //执行查询
-        service.page(pageInfo,queryWrapper);
+        categoryService.page(pageInfo,queryWrapper);
         return R.success(pageInfo);
     }
 
@@ -49,12 +48,26 @@ public class CategoryController {
      */
     @PutMapping
     public R<String> edit(@RequestBody Category category){
-        service.updateById(category);
+        categoryService.updateById(category);
         return R.success("修改成功");
     }
     @DeleteMapping
     private R<String> deleteByID(Long id){
-        service.remove(id);
+        categoryService.remove(id);
         return R.success("删除成功");
+    }
+
+    /**
+     * 根据条件查询分类数据
+     * @param category
+     * @return
+     */
+    @GetMapping("/list")
+    public R<List<Category>> getList(Category category){
+        LambdaQueryWrapper<Category> queryWrapper = new LambdaQueryWrapper();
+        queryWrapper.eq(category.getType()!=null,Category::getType,category.getType());
+        queryWrapper.orderByAsc(Category::getSort).orderByDesc(Category::getUpdateTime);
+        List<Category> list = categoryService.list(queryWrapper);
+        return R.success(list);
     }
 }
