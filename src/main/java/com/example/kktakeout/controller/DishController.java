@@ -4,8 +4,8 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.kktakeout.common.R;
 import com.example.kktakeout.dto.DishDto;
-
 import com.example.kktakeout.entity.Dish;
+import com.example.kktakeout.entity.DishFlavor;
 import com.example.kktakeout.service.CategoryService;
 import com.example.kktakeout.service.DishFlavorService;
 import com.example.kktakeout.service.DishService;
@@ -111,12 +111,31 @@ public class DishController {
      */
 
     @GetMapping("/list")
-    public R<List<Dish>> getCategoryDish(Dish dish){
+    public R<List<DishDto>> getCategoryDish(Dish dish){
         LambdaQueryWrapper<Dish> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.eq(dish.getCategoryId()!=null,Dish::getCategoryId,dish.getCategoryId());
         queryWrapper.eq(Dish::getStatus,1);
         queryWrapper.orderByAsc(Dish::getSort).orderByDesc(Dish::getUpdateTime);
         List<Dish> list = dishService.list(queryWrapper);
-        return R.success(list);
+        List<DishDto> dtos = list.stream().map((item)->{
+            DishDto dishDto = new DishDto();
+            BeanUtils.copyProperties(item,dishDto);
+            Long id = item.getId();
+            LambdaQueryWrapper<DishFlavor> flavorLambdaQueryWrapper = new LambdaQueryWrapper<>();
+            flavorLambdaQueryWrapper.eq(DishFlavor::getDishId,id);
+            List<DishFlavor> list1 = dishFlavorService.list(flavorLambdaQueryWrapper);
+            dishDto.setFlavors(list1);
+            return dishDto;
+        }).collect(Collectors.toList());
+        return R.success(dtos);
     }
+//    @GetMapping("/list")
+//    public R<List<Dish>> getCategoryDish(Dish dish){
+//        LambdaQueryWrapper<Dish> queryWrapper = new LambdaQueryWrapper<>();
+//        queryWrapper.eq(dish.getCategoryId()!=null,Dish::getCategoryId,dish.getCategoryId());
+//        queryWrapper.eq(Dish::getStatus,1);
+//        queryWrapper.orderByAsc(Dish::getSort).orderByDesc(Dish::getUpdateTime);
+//        List<Dish> list = dishService.list(queryWrapper);
+//        return R.success(list);
+//    }
 }

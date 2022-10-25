@@ -3,7 +3,6 @@ package com.example.kktakeout.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.kktakeout.common.CustomException;
-import com.example.kktakeout.dto.DishDto;
 import com.example.kktakeout.dto.SetmealDto;
 import com.example.kktakeout.entity.Setmeal;
 import com.example.kktakeout.entity.SetmealDish;
