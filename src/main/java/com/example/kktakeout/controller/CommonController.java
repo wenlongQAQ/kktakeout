@@ -50,6 +50,11 @@ public class CommonController {
         return R.success(fileName);
     }
 
+    /**
+     * 下载文件到浏览器
+     * @param name
+     * @param response
+     */
     @GetMapping("/download")
     public void download(String name, HttpServletResponse response){
         //输入流 读取文件内容

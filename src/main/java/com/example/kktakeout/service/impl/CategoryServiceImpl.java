@@ -9,7 +9,7 @@ import com.example.kktakeout.entity.Setmeal;
 import com.example.kktakeout.mapper.CategoryMapper;
 import com.example.kktakeout.service.CategoryService;
 import com.example.kktakeout.service.DishService;
-import com.example.kktakeout.service.SetmealService;
+import com.example.kktakeout.service.SetMealService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,7 +18,7 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category> i
     @Autowired
     private DishService dishService;
     @Autowired
-    private SetmealService setmealService;
+    private SetMealService setmealService;
     /**
      * 根据id删除分类,删除之前进行判断
      * @param id

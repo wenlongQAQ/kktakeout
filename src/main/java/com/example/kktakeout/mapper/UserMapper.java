@@ -1,10 +1,9 @@
 package com.example.kktakeout.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.example.kktakeout.entity.Setmeal;
+import com.example.kktakeout.entity.User;
 import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
-
-public interface SetmealMapper extends BaseMapper<Setmeal> {
+public interface UserMapper extends BaseMapper<User> {
 }

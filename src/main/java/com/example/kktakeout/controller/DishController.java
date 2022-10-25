@@ -92,10 +92,31 @@ public class DishController {
         dishDto.setCategoryName(categoryName);
         return R.success(dishDto);
     }
+
+    /**
+     * 修改员工信息
+     * @param dishDto
+     * @return
+     */
     @PutMapping
     public R<String> edit(@RequestBody DishDto dishDto){
         dishService.updateWithFlavor(dishDto);
         return R.success("修改成功");
+    }
+    /**
+     * 根据id查询信息
+     *
+     * @param dish
+     * @return
+     */
 
+    @GetMapping("/list")
+    public R<List<Dish>> getCategoryDish(Dish dish){
+        LambdaQueryWrapper<Dish> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(dish.getCategoryId()!=null,Dish::getCategoryId,dish.getCategoryId());
+        queryWrapper.eq(Dish::getStatus,1);
+        queryWrapper.orderByAsc(Dish::getSort).orderByDesc(Dish::getUpdateTime);
+        List<Dish> list = dishService.list(queryWrapper);
+        return R.success(list);
     }
 }

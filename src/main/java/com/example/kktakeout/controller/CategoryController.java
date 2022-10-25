@@ -17,6 +17,12 @@ import java.util.List;
 public class CategoryController {
     @Autowired
     private CategoryService categoryService;
+
+    /**
+     * 新增分类
+     * @param category
+     * @return
+     */
     @PostMapping
     public R<String> save(@RequestBody Category category){
         categoryService.save(category);

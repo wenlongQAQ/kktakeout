@@ -34,6 +34,8 @@ public class LoginCheckFilter implements Filter {
                 "/backend/**", //静态资源放行
                 "/front/**",
                 "/common/**",
+                "/user/sendMsg",
+                "/user/login",
                 "/"
         };
         String requestURI = request.getRequestURI();
@@ -48,10 +50,14 @@ public class LoginCheckFilter implements Filter {
             filterChain.doFilter(request,response);
             log.info("被拦截且被放行的请求: {}",request.getRequestURI());
             return;
-        }else {
-            response.getWriter().write(com.alibaba.fastjson.JSON.toJSONString(R.error("NOTLOGIN")));
+        }
+        if(request.getSession().getAttribute("user")!=null){
+            BaseContext.setCurrentId((Long) request.getSession().getAttribute("user"));
+            filterChain.doFilter(request,response);
+            log.info("被拦截且被放行的请求: {}",request.getRequestURI());
             return;
         }
+        response.getWriter().write(com.alibaba.fastjson.JSON.toJSONString(R.error("NOTLOGIN")));
     }
 
     public boolean check(String[] urls,String requestURI){
